@@ -1,0 +1,5 @@
+Id,Name,Age,Command,Loyalty,IsFemale
+int,string,byte,int,float,bool
+1001,Cao Cao,35,95,80.5,false
+1002,Sun Shangxiang,20,75,90.0,true
+1003,Liu Bei,40,78,99.9,false

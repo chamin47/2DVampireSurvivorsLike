@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": 1001,
+      "name": "Cao Cao",
+      "age": 35,
+      "command": 95,
+      "loyalty": 80.5,
+      "isFemale": false
+    },
+    {
+      "id": 1002,
+      "name": "Sun Shangxiang",
+      "age": 20,
+      "command": 75,
+      "loyalty": 90.0,
+      "isFemale": true
+    },
+    {
+      "id": 1003,
+      "name": "Liu Bei",
+      "age": 40,
+      "command": 78,
+      "loyalty": 99.9,
+      "isFemale": false
+    }
+  ]
+}
