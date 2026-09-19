@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -54,7 +55,6 @@ namespace Framework.Table.Editor
                 }
             }
 
-            AssetDatabase.Refresh();
             Debug.Log($"[TableJsonExporter] Table JSON Export Completed! ({successCount}/{allFiles.Count} converted to '{DefaultTargetDir}').");
         }
 
@@ -79,7 +79,6 @@ namespace Framework.Table.Editor
 
             if (ConvertFileToJson(assetPath, DefaultTargetDir))
             {
-                AssetDatabase.Refresh();
                 Debug.Log($"[TableJsonExporter] Selected file '{assetPath}' successfully converted to JSON!");
             }
         }
@@ -101,9 +100,9 @@ namespace Framework.Table.Editor
                 grid = ExcelTableImporter.Import(sourceFilePath);
             }
 
-            if (grid == null || grid.Count < 3)
+            if (!TableSchemaValidator.TryValidate(grid, sourceFilePath, out string validationError))
             {
-                Debug.LogError($"[TableJsonExporter] Failed to read grid data from '{sourceFilePath}'. Minimum 3 rows required (Header Names, Data Types, Data Rows).");
+                Debug.LogError($"[TableJsonExporter] {validationError} Existing JSON was not changed.");
                 return false;
             }
 
@@ -117,11 +116,26 @@ namespace Framework.Table.Editor
                 Directory.CreateDirectory(targetDirectory);
             }
 
-            string targetPath = Path.Combine(targetDirectory, $"{tableName}.json");
-            File.WriteAllText(targetPath, jsonContent, System.Text.Encoding.UTF8);
+            string targetPath = GetTargetPath(sourceFilePath, targetDirectory);
+            string normalizedTargetPath = targetPath.Replace('\\', '/');
+            string previousContent = File.Exists(targetPath) ? File.ReadAllText(targetPath, Encoding.UTF8) : null;
+            if (!string.Equals(previousContent, jsonContent, StringComparison.Ordinal))
+            {
+                string temporaryPath = targetPath + ".tmp";
+                File.WriteAllText(temporaryPath, jsonContent, new UTF8Encoding(false));
+                if (File.Exists(targetPath)) File.Delete(targetPath);
+                File.Move(temporaryPath, targetPath);
+                AssetDatabase.ImportAsset(normalizedTargetPath, ImportAssetOptions.ForceUpdate);
+            }
 
             Debug.Log($"[TableJsonExporter] Exported JSON: '{targetPath}'");
             return true;
+        }
+
+        public static string GetTargetPath(string sourceFilePath, string targetDirectory = DefaultTargetDir)
+        {
+            string tableName = Path.GetFileNameWithoutExtension(sourceFilePath);
+            return Path.Combine(targetDirectory, tableName + ".json").Replace('\\', '/');
         }
     }
 }

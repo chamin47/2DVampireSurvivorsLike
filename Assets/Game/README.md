@@ -16,7 +16,8 @@
 
 ## 어디를 수정하면 되는가
 
-- 전체 밸런스/스프라이트/사운드: `Assets/Game/Data/FarmGameConfig.asset`
+- 플레이 밸런스: `Assets/Datas/FarmBalance.xlsx`의 `Value` 열
+- 스프라이트/사운드와 기본값: `Assets/Game/Data/FarmGameConfig.asset`
 - 게임 진행/스폰/드롭/승패: `Assets/Game/Scripts/Core/FarmGameBootstrap.cs`
 - 플레이어 이동과 체력: `Assets/Game/Scripts/Gameplay/FarmPlayer.cs`
 - 적 AI: `Assets/Game/Scripts/Gameplay/FarmEnemy.cs`
@@ -33,3 +34,9 @@
 - 선택: 한/영 Localization, Addressables, 스프라이트 Animation, Hit/Flash Effect, Object Pool, Service Locator
 
 모든 생성 프리팹은 `Assets/Game/Prefabs`에 있으며 Addressables 기본 그룹에 등록됩니다.
+
+## Excel 자동화
+
+`Assets/Datas/FarmBalance.xlsx`를 저장하면 `Assets/Resources/Tables/FarmBalance.json`이 자동으로 갱신됩니다.
+플레이 시작 시 JSON의 78개 밸런스 값을 런타임 설정에 적용합니다. 세부 작성 규칙과 전체 구현 설명은
+각각 `Assets/Datas/README.md`, 프로젝트 루트의 `Descript.md`에서 확인할 수 있습니다.

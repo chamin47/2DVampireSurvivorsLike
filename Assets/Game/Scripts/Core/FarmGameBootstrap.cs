@@ -61,6 +61,9 @@ namespace DawnFarm
                 enabled = false;
                 return;
             }
+            config = Instantiate(config);
+            config.name = config.name.Replace("(Clone)", "(Excel Runtime)");
+            FarmBalanceRuntime.LoadAndApply(config);
             RegisterAddressableDefinitions();
             GameServices.Clear();
             GameServices.Register<IFarmGameSession>(this);
@@ -124,10 +127,10 @@ namespace DawnFarm
                     float progress = Mathf.Clamp01(elapsedTime / config.stageDuration);
                     spawnTimer = Mathf.Lerp(config.baseSpawnInterval, 0.16f, progress);
                 }
-                if (!finalWaveSpawned && elapsedTime >= 450f)
+                if (!finalWaveSpawned && elapsedTime >= config.finalWaveTime)
                 {
                     finalWaveSpawned = true;
-                    for (int i = 0; i < 28; i++) SpawnEnemy(ChooseEnemyKind(449f), RandomSpawnPosition(8f, 12f));
+                    for (int i = 0; i < config.finalWaveCount; i++) SpawnEnemy(ChooseEnemyKind(config.finalWaveTime - 1f), RandomSpawnPosition(8f, 12f));
                 }
             }
 
@@ -231,7 +234,7 @@ namespace DawnFarm
             if (enemyObject == null) return null;
             enemyObject.name = kind.ToString();
             var enemy = enemyObject.GetComponent<FarmEnemy>();
-            float healthScale = 1f + Mathf.Clamp01(elapsedTime / config.stageDuration) * 0.65f;
+            float healthScale = 1f + Mathf.Clamp01(elapsedTime / config.stageDuration) * config.enemyHealthScaleAtEnd;
             enemy.Configure(this, definition, position, healthScale);
             return enemy;
         }
@@ -273,8 +276,8 @@ namespace DawnFarm
             var definition = config.GetEnemy(enemy.Kind);
             int xp = definition != null ? definition.experience : 1;
             SpawnPickup(PickupKind.Experience, xp, enemy.transform.position);
-            if (Random.value < 0.02f) SpawnPickup(PickupKind.Health, 20, enemy.transform.position + (Vector3)Random.insideUnitCircle * 0.3f);
-            if (Random.value < 0.0075f) SpawnPickup(PickupKind.Magnet, 1, enemy.transform.position + (Vector3)Random.insideUnitCircle * 0.3f);
+            if (Random.value < config.healthDropChance) SpawnPickup(PickupKind.Health, 20, enemy.transform.position + (Vector3)Random.insideUnitCircle * 0.3f);
+            if (Random.value < config.magnetDropChance) SpawnPickup(PickupKind.Magnet, 1, enemy.transform.position + (Vector3)Random.insideUnitCircle * 0.3f);
             EventBus.Publish(new RunStatsChangedEvent(elapsedTime, killCount));
             if (enemy.Kind == EnemyKind.Reaper) StartCoroutine(WinAfterDelay());
         }
@@ -317,7 +320,7 @@ namespace DawnFarm
             {
                 case PickupKind.Experience: AddExperience(amount); break;
                 case PickupKind.Health: player?.Heal(amount); break;
-                case PickupKind.Magnet: magnetUntil = Time.unscaledTime + 6f; break;
+                case PickupKind.Magnet: magnetUntil = Time.unscaledTime + config.magnetDuration; break;
                 case PickupKind.Chest:
                     weapons?.UpgradeRandomOwnedWeapon();
                     effects?.Burst(player.transform.position, new Color(1f, 0.75f, 0.18f), 12);
@@ -386,6 +389,7 @@ namespace DawnFarm
         {
             Time.timeScale = 1f;
             GameServices.Clear();
+            if (config != null) Destroy(config);
         }
     }
 }

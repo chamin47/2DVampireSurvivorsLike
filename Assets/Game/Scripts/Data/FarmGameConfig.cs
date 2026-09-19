@@ -46,12 +46,44 @@ namespace DawnFarm
         public float baseSpawnInterval = 0.85f;
         public int maxEnemies = 180;
         public float chestInterval = 60f;
+        public float finalWaveTime = 450f;
+        public int finalWaveCount = 28;
+        [Range(0f, 1f)] public float healthDropChance = 0.02f;
+        [Range(0f, 1f)] public float magnetDropChance = 0.0075f;
+        public float magnetDuration = 6f;
+        public float enemyHealthScaleAtEnd = 0.65f;
 
         [Header("Player")]
         public float baseMaxHealth = 100f;
         public float baseMoveSpeed = 4.2f;
         public float basePickupRadius = 1.8f;
         public CharacterDefinition[] characters;
+
+        [Header("Weapon Balance")]
+        public float scytheBaseCooldown = 1.15f;
+        public float scytheCooldownPerLevel = 0.07f;
+        public float scytheMinCooldown = 0.28f;
+        public float scytheBaseDamage = 14f;
+        public float scytheDamagePerLevel = 5f;
+        public float scytheBaseRadius = 1.65f;
+        public float scytheRadiusPerLevel = 0.18f;
+        public float seedBaseCooldown = 0.88f;
+        public float seedCooldownPerLevel = 0.09f;
+        public float seedMinCooldown = 0.18f;
+        public float seedBaseDamage = 9f;
+        public float seedDamagePerLevel = 3f;
+        public float seedProjectileSpeed = 9f;
+        public float orbitBaseDamage = 7f;
+        public float orbitDamagePerLevel = 2.5f;
+        public float orbitBaseSpeed = 105f;
+        public float orbitSpeedPerLevel = 14f;
+        public float orbitBaseRadius = 1.55f;
+        public float orbitRadiusPerLevel = 0.08f;
+        public float orbitBaseHitRadius = 0.48f;
+        public float orbitHitRadiusPerLevel = 0.04f;
+        public float orbitBaseTick = 0.42f;
+        public float orbitTickPerLevel = 0.035f;
+        public float orbitMinTick = 0.15f;
 
         [Header("Enemies")]
         public EnemyDefinition[] enemies;

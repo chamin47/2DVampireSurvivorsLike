@@ -1,0 +1,550 @@
+{
+  "data": [
+    {
+      "key": "StageDuration",
+      "type": "float",
+      "value": "480",
+      "description": "Seconds before the Reaper boss appears.",
+      "section": "Stage"
+    },
+    {
+      "key": "BaseSpawnInterval",
+      "type": "float",
+      "value": "0.85",
+      "description": "Initial seconds between enemy spawn batches.",
+      "section": "Stage"
+    },
+    {
+      "key": "MaxEnemies",
+      "type": "int",
+      "value": "180",
+      "description": "Maximum simultaneous normal enemies.",
+      "section": "Stage"
+    },
+    {
+      "key": "ChestInterval",
+      "type": "float",
+      "value": "60",
+      "description": "Seconds between chest spawns.",
+      "section": "Stage"
+    },
+    {
+      "key": "FinalWaveTime",
+      "type": "float",
+      "value": "450",
+      "description": "Seconds when the large final wave appears.",
+      "section": "Stage"
+    },
+    {
+      "key": "FinalWaveCount",
+      "type": "int",
+      "value": "28",
+      "description": "Enemies spawned by the large final wave.",
+      "section": "Stage"
+    },
+    {
+      "key": "HealthDropChance",
+      "type": "float",
+      "value": "0.02",
+      "description": "Health drop probability from 0 to 1.",
+      "section": "Drops"
+    },
+    {
+      "key": "MagnetDropChance",
+      "type": "float",
+      "value": "7.4999999999999997E-3",
+      "description": "Magnet drop probability from 0 to 1.",
+      "section": "Drops"
+    },
+    {
+      "key": "MagnetDuration",
+      "type": "float",
+      "value": "6",
+      "description": "Magnet effect duration in seconds.",
+      "section": "Drops"
+    },
+    {
+      "key": "EnemyHealthScaleAtEnd",
+      "type": "float",
+      "value": "0.65",
+      "description": "Additional enemy health ratio at stage end.",
+      "section": "Stage"
+    },
+    {
+      "key": "BaseMaxHealth",
+      "type": "float",
+      "value": "100",
+      "description": "Player health before character multipliers.",
+      "section": "Player"
+    },
+    {
+      "key": "BaseMoveSpeed",
+      "type": "float",
+      "value": "4.2",
+      "description": "Player movement speed before character multipliers.",
+      "section": "Player"
+    },
+    {
+      "key": "BasePickupRadius",
+      "type": "float",
+      "value": "1.8",
+      "description": "Player pickup radius before passive upgrades.",
+      "section": "Player"
+    },
+    {
+      "key": "ScytheBaseCooldown",
+      "type": "float",
+      "value": "1.1499999999999999",
+      "description": "Scythe base attack interval in seconds.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "ScytheCooldownPerLevel",
+      "type": "float",
+      "value": "7.0000000000000007E-2",
+      "description": "Cooldown reduction per scythe level.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "ScytheMinCooldown",
+      "type": "float",
+      "value": "0.28000000000000003",
+      "description": "Minimum scythe attack interval.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "ScytheBaseDamage",
+      "type": "float",
+      "value": "14",
+      "description": "Scythe base damage.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "ScytheDamagePerLevel",
+      "type": "float",
+      "value": "5",
+      "description": "Scythe damage gained per level.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "ScytheBaseRadius",
+      "type": "float",
+      "value": "1.65",
+      "description": "Scythe base hit radius.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "ScytheRadiusPerLevel",
+      "type": "float",
+      "value": "0.18",
+      "description": "Scythe radius gained per level.",
+      "section": "Weapon: Scythe"
+    },
+    {
+      "key": "SeedBaseCooldown",
+      "type": "float",
+      "value": "0.88",
+      "description": "Seed gun base firing interval.",
+      "section": "Weapon: Seed Gun"
+    },
+    {
+      "key": "SeedCooldownPerLevel",
+      "type": "float",
+      "value": "0.09",
+      "description": "Seed gun cooldown reduction per level.",
+      "section": "Weapon: Seed Gun"
+    },
+    {
+      "key": "SeedMinCooldown",
+      "type": "float",
+      "value": "0.18",
+      "description": "Minimum seed gun firing interval.",
+      "section": "Weapon: Seed Gun"
+    },
+    {
+      "key": "SeedBaseDamage",
+      "type": "float",
+      "value": "9",
+      "description": "Seed projectile base damage.",
+      "section": "Weapon: Seed Gun"
+    },
+    {
+      "key": "SeedDamagePerLevel",
+      "type": "float",
+      "value": "3",
+      "description": "Seed projectile damage gained per level.",
+      "section": "Weapon: Seed Gun"
+    },
+    {
+      "key": "SeedProjectileSpeed",
+      "type": "float",
+      "value": "9",
+      "description": "Seed projectile travel speed.",
+      "section": "Weapon: Seed Gun"
+    },
+    {
+      "key": "OrbitBaseDamage",
+      "type": "float",
+      "value": "7",
+      "description": "Orbiting pickaxe base damage.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitDamagePerLevel",
+      "type": "float",
+      "value": "2.5",
+      "description": "Orbiting pickaxe damage gained per level.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitBaseSpeed",
+      "type": "float",
+      "value": "105",
+      "description": "Orbit rotation speed in degrees per second.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitSpeedPerLevel",
+      "type": "float",
+      "value": "14",
+      "description": "Orbit rotation speed gained per level.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitBaseRadius",
+      "type": "float",
+      "value": "1.55",
+      "description": "Base distance from the player.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitRadiusPerLevel",
+      "type": "float",
+      "value": "0.08",
+      "description": "Orbit distance gained per level.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitBaseHitRadius",
+      "type": "float",
+      "value": "0.48",
+      "description": "Base pickaxe collision radius.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitHitRadiusPerLevel",
+      "type": "float",
+      "value": "0.04",
+      "description": "Collision radius gained per level.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitBaseTick",
+      "type": "float",
+      "value": "0.42",
+      "description": "Base seconds between orbit damage checks.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitTickPerLevel",
+      "type": "float",
+      "value": "3.5000000000000003E-2",
+      "description": "Damage-check interval reduction per level.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "OrbitMinTick",
+      "type": "float",
+      "value": "0.15",
+      "description": "Minimum orbit damage-check interval.",
+      "section": "Weapon: Pickaxe"
+    },
+    {
+      "key": "Farmer0DamageMultiplier",
+      "type": "float",
+      "value": "1.1000000000000001",
+      "description": "Balanced farmer damage multiplier.",
+      "section": "Character 0"
+    },
+    {
+      "key": "Farmer0MoveSpeedMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Balanced farmer move-speed multiplier.",
+      "section": "Character 0"
+    },
+    {
+      "key": "Farmer0CooldownMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Balanced farmer cooldown multiplier.",
+      "section": "Character 0"
+    },
+    {
+      "key": "Farmer0MaxHealthMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Balanced farmer health multiplier.",
+      "section": "Character 0"
+    },
+    {
+      "key": "Farmer1DamageMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Sprinter damage multiplier.",
+      "section": "Character 1"
+    },
+    {
+      "key": "Farmer1MoveSpeedMultiplier",
+      "type": "float",
+      "value": "1.1499999999999999",
+      "description": "Sprinter move-speed multiplier.",
+      "section": "Character 1"
+    },
+    {
+      "key": "Farmer1CooldownMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Sprinter cooldown multiplier.",
+      "section": "Character 1"
+    },
+    {
+      "key": "Farmer1MaxHealthMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Sprinter health multiplier.",
+      "section": "Character 1"
+    },
+    {
+      "key": "Farmer2DamageMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Quickshot damage multiplier.",
+      "section": "Character 2"
+    },
+    {
+      "key": "Farmer2MoveSpeedMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Quickshot move-speed multiplier.",
+      "section": "Character 2"
+    },
+    {
+      "key": "Farmer2CooldownMultiplier",
+      "type": "float",
+      "value": "0.9",
+      "description": "Quickshot cooldown multiplier.",
+      "section": "Character 2"
+    },
+    {
+      "key": "Farmer2MaxHealthMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Quickshot health multiplier.",
+      "section": "Character 2"
+    },
+    {
+      "key": "Farmer3DamageMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Survivor damage multiplier.",
+      "section": "Character 3"
+    },
+    {
+      "key": "Farmer3MoveSpeedMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Survivor move-speed multiplier.",
+      "section": "Character 3"
+    },
+    {
+      "key": "Farmer3CooldownMultiplier",
+      "type": "float",
+      "value": "1",
+      "description": "Survivor cooldown multiplier.",
+      "section": "Character 3"
+    },
+    {
+      "key": "Farmer3MaxHealthMultiplier",
+      "type": "float",
+      "value": "1.25",
+      "description": "Survivor health multiplier.",
+      "section": "Character 3"
+    },
+    {
+      "key": "ZombieMaxHealth",
+      "type": "float",
+      "value": "18",
+      "description": "Zombie base health.",
+      "section": "Enemy: Zombie"
+    },
+    {
+      "key": "ZombieMoveSpeed",
+      "type": "float",
+      "value": "1.45",
+      "description": "Zombie movement speed.",
+      "section": "Enemy: Zombie"
+    },
+    {
+      "key": "ZombieTouchDamage",
+      "type": "float",
+      "value": "8",
+      "description": "Zombie contact damage.",
+      "section": "Enemy: Zombie"
+    },
+    {
+      "key": "ZombieExperience",
+      "type": "int",
+      "value": "1",
+      "description": "Experience dropped by Zombie.",
+      "section": "Enemy: Zombie"
+    },
+    {
+      "key": "ZombieAttackCooldown",
+      "type": "float",
+      "value": "2.5",
+      "description": "Zombie attack cooldown.",
+      "section": "Enemy: Zombie"
+    },
+    {
+      "key": "RunnerMaxHealth",
+      "type": "float",
+      "value": "14",
+      "description": "Runner base health.",
+      "section": "Enemy: Runner"
+    },
+    {
+      "key": "RunnerMoveSpeed",
+      "type": "float",
+      "value": "2.4500000000000002",
+      "description": "Runner movement speed.",
+      "section": "Enemy: Runner"
+    },
+    {
+      "key": "RunnerTouchDamage",
+      "type": "float",
+      "value": "7",
+      "description": "Runner contact damage.",
+      "section": "Enemy: Runner"
+    },
+    {
+      "key": "RunnerExperience",
+      "type": "int",
+      "value": "2",
+      "description": "Experience dropped by Runner.",
+      "section": "Enemy: Runner"
+    },
+    {
+      "key": "RunnerAttackCooldown",
+      "type": "float",
+      "value": "2.2000000000000002",
+      "description": "Runner attack cooldown.",
+      "section": "Enemy: Runner"
+    },
+    {
+      "key": "SkeletonMaxHealth",
+      "type": "float",
+      "value": "48",
+      "description": "Skeleton base health.",
+      "section": "Enemy: Skeleton"
+    },
+    {
+      "key": "SkeletonMoveSpeed",
+      "type": "float",
+      "value": "1.05",
+      "description": "Skeleton movement speed.",
+      "section": "Enemy: Skeleton"
+    },
+    {
+      "key": "SkeletonTouchDamage",
+      "type": "float",
+      "value": "13",
+      "description": "Skeleton contact damage.",
+      "section": "Enemy: Skeleton"
+    },
+    {
+      "key": "SkeletonExperience",
+      "type": "int",
+      "value": "4",
+      "description": "Experience dropped by Skeleton.",
+      "section": "Enemy: Skeleton"
+    },
+    {
+      "key": "SkeletonAttackCooldown",
+      "type": "float",
+      "value": "2.5",
+      "description": "Skeleton attack cooldown.",
+      "section": "Enemy: Skeleton"
+    },
+    {
+      "key": "MummyMaxHealth",
+      "type": "float",
+      "value": "34",
+      "description": "Mummy base health.",
+      "section": "Enemy: Mummy"
+    },
+    {
+      "key": "MummyMoveSpeed",
+      "type": "float",
+      "value": "1.2",
+      "description": "Mummy movement speed.",
+      "section": "Enemy: Mummy"
+    },
+    {
+      "key": "MummyTouchDamage",
+      "type": "float",
+      "value": "10",
+      "description": "Mummy contact damage.",
+      "section": "Enemy: Mummy"
+    },
+    {
+      "key": "MummyExperience",
+      "type": "int",
+      "value": "4",
+      "description": "Experience dropped by Mummy.",
+      "section": "Enemy: Mummy"
+    },
+    {
+      "key": "MummyAttackCooldown",
+      "type": "float",
+      "value": "2.35",
+      "description": "Mummy ranged attack cooldown.",
+      "section": "Enemy: Mummy"
+    },
+    {
+      "key": "ReaperMaxHealth",
+      "type": "float",
+      "value": "950",
+      "description": "Reaper boss base health.",
+      "section": "Enemy: Reaper"
+    },
+    {
+      "key": "ReaperMoveSpeed",
+      "type": "float",
+      "value": "1.1499999999999999",
+      "description": "Reaper boss movement speed.",
+      "section": "Enemy: Reaper"
+    },
+    {
+      "key": "ReaperTouchDamage",
+      "type": "float",
+      "value": "22",
+      "description": "Reaper boss contact damage.",
+      "section": "Enemy: Reaper"
+    },
+    {
+      "key": "ReaperExperience",
+      "type": "int",
+      "value": "80",
+      "description": "Experience dropped by Reaper.",
+      "section": "Enemy: Reaper"
+    },
+    {
+      "key": "ReaperAttackCooldown",
+      "type": "float",
+      "value": "1.8",
+      "description": "Reaper boss attack cooldown.",
+      "section": "Enemy: Reaper"
+    }
+  ]
+}

@@ -60,12 +60,12 @@ namespace DawnFarm
             if (levels[UpgradeKind.Scythe] > 0 && scytheTimer <= 0f)
             {
                 ScytheAttack(levels[UpgradeKind.Scythe]);
-                scytheTimer = Mathf.Max(0.28f, (1.15f - levels[UpgradeKind.Scythe] * 0.07f) * cooldown);
+                scytheTimer = Mathf.Max(session.Config.scytheMinCooldown, (session.Config.scytheBaseCooldown - levels[UpgradeKind.Scythe] * session.Config.scytheCooldownPerLevel) * cooldown);
             }
             if (levels[UpgradeKind.SeedGun] > 0 && seedTimer <= 0f)
             {
                 SeedAttack(levels[UpgradeKind.SeedGun]);
-                seedTimer = Mathf.Max(0.18f, (0.88f - levels[UpgradeKind.SeedGun] * 0.09f) * cooldown);
+                seedTimer = Mathf.Max(session.Config.seedMinCooldown, (session.Config.seedBaseCooldown - levels[UpgradeKind.SeedGun] * session.Config.seedCooldownPerLevel) * cooldown);
             }
             if (levels[UpgradeKind.OrbitingPickaxe] > 0) UpdateOrbit(levels[UpgradeKind.OrbitingPickaxe]);
         }
@@ -76,8 +76,8 @@ namespace DawnFarm
             if (target == null) return;
             Vector2 direction = (target.transform.position - player.transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            float radius = 1.65f + level * 0.18f;
-            float damage = (14f + level * 5f) * player.DamageMultiplier;
+            float radius = session.Config.scytheBaseRadius + level * session.Config.scytheRadiusPerLevel;
+            float damage = (session.Config.scytheBaseDamage + level * session.Config.scytheDamagePerLevel) * player.DamageMultiplier;
             var visual = session.SpawnWeaponVisual(player.transform.position + (Vector3)(direction * 0.8f), session.Config.scytheSprite);
             if (visual != null)
             {
@@ -112,7 +112,7 @@ namespace DawnFarm
             {
                 float offset = (i - (count - 1) * 0.5f) * 9f;
                 Vector2 shotDirection = Quaternion.Euler(0f, 0f, offset) * direction;
-                session.SpawnProjectile(player.transform.position, shotDirection, false, (9f + level * 3f) * player.DamageMultiplier, 9f, level >= 3 ? 2 : level - 1, session.Config.playerBulletSprite);
+                session.SpawnProjectile(player.transform.position, shotDirection, false, (session.Config.seedBaseDamage + level * session.Config.seedDamagePerLevel) * player.DamageMultiplier, session.Config.seedProjectileSpeed, level >= 3 ? 2 : level - 1, session.Config.playerBulletSprite);
             }
             if (session.Config.ranged != null) AudioPlayer.PlaySfx(session.Config.ranged, 0.28f, UnityEngine.Random.Range(0.96f, 1.08f));
         }
@@ -127,8 +127,8 @@ namespace DawnFarm
                 visual.GetComponent<TimedWeaponVisual>()?.Configure(session.Config.pickaxeSprite, 9999f, 0.9f + level * 0.05f, 360f);
                 orbitVisuals.Add(visual);
             }
-            orbitAngle += Time.deltaTime * (105f + level * 14f);
-            float radius = 1.55f + level * 0.08f;
+            orbitAngle += Time.deltaTime * (session.Config.orbitBaseSpeed + level * session.Config.orbitSpeedPerLevel);
+            float radius = session.Config.orbitBaseRadius + level * session.Config.orbitRadiusPerLevel;
             for (int i = 0; i < orbitVisuals.Count; i++)
             {
                 if (orbitVisuals[i] == null) continue;
@@ -136,8 +136,8 @@ namespace DawnFarm
                 orbitVisuals[i].transform.position = player.transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
             }
             if (orbitDamageTimer > 0f) return;
-            orbitDamageTimer = Mathf.Max(0.15f, 0.42f - level * 0.035f);
-            float hitRadius = 0.48f + level * 0.04f;
+            orbitDamageTimer = Mathf.Max(session.Config.orbitMinTick, session.Config.orbitBaseTick - level * session.Config.orbitTickPerLevel);
+            float hitRadius = session.Config.orbitBaseHitRadius + level * session.Config.orbitHitRadiusPerLevel;
             foreach (var visual in orbitVisuals)
             {
                 if (visual == null) continue;
@@ -145,7 +145,7 @@ namespace DawnFarm
                 {
                     var enemy = session.Enemies[i];
                     if (enemy != null && enemy.IsAlive && ((Vector2)(enemy.transform.position - visual.transform.position)).sqrMagnitude < hitRadius * hitRadius)
-                        enemy.TakeDamage((7f + level * 2.5f) * player.DamageMultiplier);
+                        enemy.TakeDamage((session.Config.orbitBaseDamage + level * session.Config.orbitDamagePerLevel) * player.DamageMultiplier);
                 }
             }
         }
