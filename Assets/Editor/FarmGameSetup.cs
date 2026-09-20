@@ -20,7 +20,7 @@ namespace DawnFarm.Editor
 {
     public static class FarmGameSetup
     {
-        private const string Root = "Assets/Game";
+        private const string Root = "Assets";
         private const string DataPath = Root + "/Data/FarmGameConfig.asset";
         private const string FontPath = Root + "/UI/NeoDGM Dynamic.asset";
         private const string ScenePath = Root + "/Scenes/FarmSurvivors.unity";
@@ -37,7 +37,7 @@ namespace DawnFarm.Editor
             CreateGameScene(config);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log("[DawnFarmSetup] Complete game created. Open Assets/Game/Scenes/FarmSurvivors.unity and press Play.");
+            Debug.Log("[DawnFarmSetup] Complete game created. Open Assets/Scenes/FarmSurvivors.unity and press Play.");
         }
 
         private static void EnsureFolders()
@@ -86,7 +86,7 @@ namespace DawnFarm.Editor
             config.chestSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Box");
             config.shadowSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Shadow");
             config.scytheSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Weapon 0");
-            config.seedGunSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Weapon 4");
+            config.seedGunSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Weapon 0");
             config.pickaxeSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Weapon 2");
             config.playerBulletSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Bullet 0");
             config.enemyBulletSprite = LoadSprite("Assets/Undead Survivor/Sprites/Props.png", "Bullet 5");
@@ -94,9 +94,11 @@ namespace DawnFarm.Editor
             config.titleSprite = LoadSprite("Assets/Undead Survivor/Sprites/UI.png", "Title 0");
 
             config.bgm = LoadAudio("BGM.wav");
-            config.melee = LoadAudio("Melee 0.wav");
+            config.melee = LoadAudio("Melee0.wav");
+            config.meleeAlternate = LoadAudio("Melee1.wav");
             config.ranged = LoadAudio("Range.wav");
-            config.hit = LoadAudio("Hit 0.wav");
+            config.hit = LoadAudio("Hit0.wav");
+            config.hitAlternate = LoadAudio("Hit1.wav");
             config.dead = LoadAudio("Dead.wav");
             config.levelUp = LoadAudio("LevelUp.wav");
             config.select = LoadAudio("Select.wav");
@@ -199,7 +201,7 @@ namespace DawnFarm.Editor
             {
                 var renderer = go.AddComponent<SpriteRenderer>();
                 renderer.sortingOrder = 25;
-                renderer.sprite = config.scytheSprite;
+                renderer.sprite = config.pickaxeSprite;
                 go.AddComponent<TimedWeaponVisual>();
             });
         }

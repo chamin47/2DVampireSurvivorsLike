@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game/Scenes/FarmSurvivors.unity
+    path: Assets/Scenes/FarmSurvivors.unity
     guid: 1115192d4728f8043a47ec3f0a9aa2d4
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 317a9af2d9a7e6f4ca5f55852699a2ad, type: 2}
