@@ -73,7 +73,7 @@ namespace DawnFarm
         public float seedBaseDamage = 9f;
         public float seedDamagePerLevel = 3f;
         public float seedProjectileSpeed = 9f;
-        public float orbitBaseDamage = 7f;
+        public float orbitBaseDamage = 18f;
         public float orbitDamagePerLevel = 2.5f;
         public float orbitBaseSpeed = 105f;
         public float orbitSpeedPerLevel = 14f;
@@ -109,8 +109,10 @@ namespace DawnFarm
         [Header("Audio")]
         public AudioClip bgm;
         public AudioClip melee;
+        public AudioClip meleeAlternate;
         public AudioClip ranged;
         public AudioClip hit;
+        public AudioClip hitAlternate;
         public AudioClip dead;
         public AudioClip levelUp;
         public AudioClip select;

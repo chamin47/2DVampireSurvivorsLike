@@ -39,7 +39,7 @@ $rows = @(
     @('SeedBaseDamage', 'float', '9', 'Seed projectile base damage.', 'Weapon: Seed Gun'),
     @('SeedDamagePerLevel', 'float', '3', 'Seed projectile damage gained per level.', 'Weapon: Seed Gun'),
     @('SeedProjectileSpeed', 'float', '9', 'Seed projectile travel speed.', 'Weapon: Seed Gun'),
-    @('OrbitBaseDamage', 'float', '7', 'Orbiting pickaxe base damage.', 'Weapon: Pickaxe'),
+    @('OrbitBaseDamage', 'float', '18', 'Orbiting pickaxe base damage.', 'Weapon: Pickaxe'),
     @('OrbitDamagePerLevel', 'float', '2.5', 'Orbiting pickaxe damage gained per level.', 'Weapon: Pickaxe'),
     @('OrbitBaseSpeed', 'float', '105', 'Orbit rotation speed in degrees per second.', 'Weapon: Pickaxe'),
     @('OrbitSpeedPerLevel', 'float', '14', 'Orbit rotation speed gained per level.', 'Weapon: Pickaxe'),

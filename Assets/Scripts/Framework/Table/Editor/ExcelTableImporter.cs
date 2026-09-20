@@ -62,7 +62,7 @@ namespace Framework.Table.Editor
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(stream);
-                XmlNodeList siNodes = doc.GetElementsByTagName("si");
+                XmlNodeList siNodes = doc.SelectNodes("//*[local-name()='si']");
                 foreach (XmlNode si in siNodes)
                 {
                     sharedStrings.Add(si.InnerText);
@@ -89,7 +89,7 @@ namespace Framework.Table.Editor
                 XmlDocument doc = new XmlDocument();
                 doc.Load(stream);
 
-                XmlNodeList rowNodes = doc.GetElementsByTagName("row");
+                XmlNodeList rowNodes = doc.SelectNodes("//*[local-name()='row']");
                 foreach (XmlNode rowNode in rowNodes)
                 {
                     List<string> rowCells = new List<string>();

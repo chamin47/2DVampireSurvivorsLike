@@ -16,6 +16,12 @@ MonoBehaviour:
   baseSpawnInterval: 0.85
   maxEnemies: 180
   chestInterval: 60
+  finalWaveTime: 450
+  finalWaveCount: 28
+  healthDropChance: 0.02
+  magnetDropChance: 0.0075
+  magnetDuration: 6
+  enemyHealthScaleAtEnd: 0.65
   baseMaxHealth: 100
   baseMoveSpeed: 4.2
   basePickupRadius: 1.8
@@ -116,6 +122,30 @@ MonoBehaviour:
     moveSpeedMultiplier: 1
     cooldownMultiplier: 1
     maxHealthMultiplier: 1.25
+  scytheBaseCooldown: 1.15
+  scytheCooldownPerLevel: 0.07
+  scytheMinCooldown: 0.28
+  scytheBaseDamage: 14
+  scytheDamagePerLevel: 5
+  scytheBaseRadius: 1.65
+  scytheRadiusPerLevel: 0.18
+  seedBaseCooldown: 0.88
+  seedCooldownPerLevel: 0.09
+  seedMinCooldown: 0.18
+  seedBaseDamage: 9
+  seedDamagePerLevel: 3
+  seedProjectileSpeed: 9
+  orbitBaseDamage: 18
+  orbitDamagePerLevel: 2.5
+  orbitBaseSpeed: 105
+  orbitSpeedPerLevel: 14
+  orbitBaseRadius: 1.55
+  orbitRadiusPerLevel: 0.08
+  orbitBaseHitRadius: 0.48
+  orbitHitRadiusPerLevel: 0.04
+  orbitBaseTick: 0.42
+  orbitTickPerLevel: 0.035
+  orbitMinTick: 0.15
   enemies:
   - kind: 0
     koreanName: "\uC880\uBE44"
@@ -214,7 +244,7 @@ MonoBehaviour:
   chestSprite: {fileID: -38345435, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   shadowSprite: {fileID: 1304559308, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   scytheSprite: {fileID: 143021600, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
-  seedGunSprite: {fileID: -144335857, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  seedGunSprite: {fileID: 143021600, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   pickaxeSprite: {fileID: 1349035616, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   playerBulletSprite: {fileID: 1737672109, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   enemyBulletSprite: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
@@ -222,9 +252,11 @@ MonoBehaviour:
   titleSprite: {fileID: 1315674547, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   font: {fileID: 11400000, guid: efca57f3fe340484b8220b08b3b94ad8, type: 2}
   bgm: {fileID: 8300000, guid: 4559935c00ef8e94b846e2e03e39f0d0, type: 3}
-  melee: {fileID: 0}
+  melee: {fileID: 8300000, guid: 14f24de2a9a70154e96297de25e2184c, type: 3}
+  meleeAlternate: {fileID: 8300000, guid: d1bef3102d08ba944ac7bcac65733a26, type: 3}
   ranged: {fileID: 8300000, guid: 6f0c572d865b4664db7a460972bc4768, type: 3}
-  hit: {fileID: 0}
+  hit: {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
+  hitAlternate: {fileID: 8300000, guid: 6b7eaf4532a2f614595ad58d2b86efc4, type: 3}
   dead: {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
   levelUp: {fileID: 8300000, guid: 64795b87003c2324fa0814fbc336066c, type: 3}
   select: {fileID: 8300000, guid: 4b294d59d2399014daa718b35c9de73b, type: 3}
