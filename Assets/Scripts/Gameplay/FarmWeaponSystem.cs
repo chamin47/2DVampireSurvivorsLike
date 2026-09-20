@@ -32,9 +32,9 @@ namespace DawnFarm
         private readonly List<GameObject> orbitVisuals = new List<GameObject>();
         private IFarmGameSession session;
         private FarmPlayer player;
-        private float scytheTimer;
         private float seedTimer;
         private float orbitDamageTimer;
+        private float orbitMeleeSoundTimer;
         private float orbitAngle;
 
         public void Configure(IFarmGameSession gameSession, FarmPlayer owner)
@@ -43,10 +43,10 @@ namespace DawnFarm
             player = owner;
             levels.Clear();
             foreach (UpgradeKind kind in Enum.GetValues(typeof(UpgradeKind))) levels[kind] = 0;
-            levels[UpgradeKind.Scythe] = 1;
-            scytheTimer = 0.15f;
+            levels[UpgradeKind.OrbitingPickaxe] = 1;
             seedTimer = 0.8f;
             orbitDamageTimer = 0f;
+            orbitMeleeSoundTimer = 0f;
             ClearOrbitVisuals();
         }
 
@@ -54,55 +54,18 @@ namespace DawnFarm
         {
             if (session == null || player == null || session.State != FarmGameState.Playing) return;
             float cooldown = player.CooldownMultiplier;
-            scytheTimer -= Time.deltaTime;
             seedTimer -= Time.deltaTime;
             orbitDamageTimer -= Time.deltaTime;
-            if (levels[UpgradeKind.Scythe] > 0 && scytheTimer <= 0f)
-            {
-                ScytheAttack(levels[UpgradeKind.Scythe]);
-                scytheTimer = Mathf.Max(session.Config.scytheMinCooldown, (session.Config.scytheBaseCooldown - levels[UpgradeKind.Scythe] * session.Config.scytheCooldownPerLevel) * cooldown);
-            }
+            orbitMeleeSoundTimer -= Time.deltaTime;
             if (levels[UpgradeKind.SeedGun] > 0 && seedTimer <= 0f)
             {
-                SeedAttack(levels[UpgradeKind.SeedGun]);
+                ThrowShovels(levels[UpgradeKind.SeedGun]);
                 seedTimer = Mathf.Max(session.Config.seedMinCooldown, (session.Config.seedBaseCooldown - levels[UpgradeKind.SeedGun] * session.Config.seedCooldownPerLevel) * cooldown);
             }
             if (levels[UpgradeKind.OrbitingPickaxe] > 0) UpdateOrbit(levels[UpgradeKind.OrbitingPickaxe]);
         }
 
-        private void ScytheAttack(int level)
-        {
-            FarmEnemy target = session.FindNearestEnemy(player.transform.position);
-            if (target == null) return;
-            Vector2 direction = (target.transform.position - player.transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            float radius = session.Config.scytheBaseRadius + level * session.Config.scytheRadiusPerLevel;
-            float damage = (session.Config.scytheBaseDamage + level * session.Config.scytheDamagePerLevel) * player.DamageMultiplier;
-            var visual = session.SpawnWeaponVisual(player.transform.position + (Vector3)(direction * 0.8f), session.Config.scytheSprite);
-            if (visual != null)
-            {
-                visual.transform.rotation = Quaternion.Euler(0f, 0f, angle - 30f);
-                visual.GetComponent<TimedWeaponVisual>()?.Configure(session.Config.scytheSprite, 0.18f, 1.35f + level * 0.1f, 420f);
-            }
-            DamageArc(direction, radius, damage, false);
-            if (level >= 3) DamageArc(-direction, radius, damage * 0.85f, true);
-            if (session.Config.melee != null) AudioPlayer.PlaySfx(session.Config.melee, 0.32f, UnityEngine.Random.Range(0.94f, 1.06f));
-        }
-
-        private void DamageArc(Vector2 direction, float radius, float damage, bool reverse)
-        {
-            var enemies = session.Enemies;
-            for (int i = enemies.Count - 1; i >= 0; i--)
-            {
-                var enemy = enemies[i];
-                if (enemy == null || !enemy.IsAlive) continue;
-                Vector2 delta = enemy.transform.position - player.transform.position;
-                if (delta.sqrMagnitude <= radius * radius && (delta.normalized == Vector2.zero || Vector2.Dot(direction, delta.normalized) > (reverse ? 0.15f : -0.05f)))
-                    enemy.TakeDamage(damage);
-            }
-        }
-
-        private void SeedAttack(int level)
+        private void ThrowShovels(int level)
         {
             FarmEnemy target = session.FindNearestEnemy(player.transform.position);
             if (target == null) return;
@@ -112,7 +75,7 @@ namespace DawnFarm
             {
                 float offset = (i - (count - 1) * 0.5f) * 9f;
                 Vector2 shotDirection = Quaternion.Euler(0f, 0f, offset) * direction;
-                session.SpawnProjectile(player.transform.position, shotDirection, false, (session.Config.seedBaseDamage + level * session.Config.seedDamagePerLevel) * player.DamageMultiplier, session.Config.seedProjectileSpeed, level >= 3 ? 2 : level - 1, session.Config.playerBulletSprite);
+                session.SpawnProjectile(player.transform.position, shotDirection, false, (session.Config.seedBaseDamage + level * session.Config.seedDamagePerLevel) * player.DamageMultiplier, session.Config.seedProjectileSpeed, level >= 3 ? 2 : level - 1, session.Config.seedGunSprite);
             }
             if (session.Config.ranged != null) AudioPlayer.PlaySfx(session.Config.ranged, 0.28f, UnityEngine.Random.Range(0.96f, 1.08f));
         }
@@ -120,11 +83,12 @@ namespace DawnFarm
         private void UpdateOrbit(int level)
         {
             int count = 1 + (level - 1) / 2;
+            float visualScale = 0.9f + level * 0.04f;
             while (orbitVisuals.Count < count)
             {
                 var visual = session.SpawnWeaponVisual(player.transform.position, session.Config.pickaxeSprite);
                 if (visual == null) break;
-                visual.GetComponent<TimedWeaponVisual>()?.Configure(session.Config.pickaxeSprite, 9999f, 0.9f + level * 0.05f, 360f);
+                visual.GetComponent<TimedWeaponVisual>()?.Configure(session.Config.pickaxeSprite, 9999f, visualScale, 0f);
                 orbitVisuals.Add(visual);
             }
             orbitAngle += Time.deltaTime * (session.Config.orbitBaseSpeed + level * session.Config.orbitSpeedPerLevel);
@@ -132,20 +96,38 @@ namespace DawnFarm
             for (int i = 0; i < orbitVisuals.Count; i++)
             {
                 if (orbitVisuals[i] == null) continue;
-                float angle = (orbitAngle + i * 360f / orbitVisuals.Count) * Mathf.Deg2Rad;
+                float angleDegrees = orbitAngle + i * 360f / orbitVisuals.Count;
+                float angle = angleDegrees * Mathf.Deg2Rad;
                 orbitVisuals[i].transform.position = player.transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+                orbitVisuals[i].transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees);
+                orbitVisuals[i].transform.localScale = Vector3.one * visualScale;
             }
             if (orbitDamageTimer > 0f) return;
             orbitDamageTimer = Mathf.Max(session.Config.orbitMinTick, session.Config.orbitBaseTick - level * session.Config.orbitTickPerLevel);
             float hitRadius = session.Config.orbitBaseHitRadius + level * session.Config.orbitHitRadiusPerLevel;
+            bool hitAnyEnemy = false;
             foreach (var visual in orbitVisuals)
             {
                 if (visual == null) continue;
                 for (int i = session.Enemies.Count - 1; i >= 0; i--)
                 {
                     var enemy = session.Enemies[i];
-                    if (enemy != null && enemy.IsAlive && ((Vector2)(enemy.transform.position - visual.transform.position)).sqrMagnitude < hitRadius * hitRadius)
-                        enemy.TakeDamage((session.Config.orbitBaseDamage + level * session.Config.orbitDamagePerLevel) * player.DamageMultiplier);
+                    float combinedRadius = enemy != null ? hitRadius + enemy.CollisionRadius : 0f;
+                    if (enemy != null && enemy.IsAlive && ((Vector2)(enemy.transform.position - visual.transform.position)).sqrMagnitude < combinedRadius * combinedRadius)
+                    {
+                        hitAnyEnemy = true;
+                        enemy.TakeDamage((session.Config.orbitBaseDamage + (level - 1) * session.Config.orbitDamagePerLevel) * player.DamageMultiplier);
+                    }
+                }
+            }
+            if (hitAnyEnemy && orbitMeleeSoundTimer <= 0f)
+            {
+                AudioClip meleeClip = UnityEngine.Random.value < 0.5f ? session.Config.melee : session.Config.meleeAlternate;
+                if (meleeClip == null) meleeClip = session.Config.melee ?? session.Config.meleeAlternate;
+                if (meleeClip != null)
+                {
+                    orbitMeleeSoundTimer = 0.28f;
+                    AudioPlayer.PlaySfx(meleeClip, 0.18f, UnityEngine.Random.Range(0.94f, 1.04f));
                 }
             }
         }
@@ -153,7 +135,8 @@ namespace DawnFarm
         public UpgradeOption[] CreateChoices(int count = 3)
         {
             var candidates = new List<UpgradeKind>();
-            foreach (UpgradeKind kind in Enum.GetValues(typeof(UpgradeKind))) if (levels[kind] < 5) candidates.Add(kind);
+            foreach (UpgradeKind kind in Enum.GetValues(typeof(UpgradeKind)))
+                if (kind != UpgradeKind.Scythe && levels[kind] < 5) candidates.Add(kind);
             for (int i = candidates.Count - 1; i > 0; i--)
             {
                 int swap = UnityEngine.Random.Range(0, i + 1);
@@ -182,7 +165,7 @@ namespace DawnFarm
         public void UpgradeRandomOwnedWeapon()
         {
             var owned = new List<UpgradeKind>();
-            foreach (var kind in new[] { UpgradeKind.Scythe, UpgradeKind.SeedGun, UpgradeKind.OrbitingPickaxe })
+            foreach (var kind in new[] { UpgradeKind.SeedGun, UpgradeKind.OrbitingPickaxe })
                 if (levels[kind] > 0 && levels[kind] < 5) owned.Add(kind);
             if (owned.Count == 0) return;
             ApplyUpgrade(owned[UnityEngine.Random.Range(0, owned.Count)]);
@@ -192,8 +175,7 @@ namespace DawnFarm
         {
             switch (kind)
             {
-                case UpgradeKind.Scythe: return new UpgradeOption(kind, level, "농부의 낫", "FARMER'S SCYTHE", "피해·범위·양방향 공격 강화", "More damage, range and dual swings");
-                case UpgradeKind.SeedGun: return new UpgradeOption(kind, level, "씨앗총", "SEED GUN", "연사·관통·탄환 수 강화", "Faster, piercing, multi-shot seeds");
+                case UpgradeKind.SeedGun: return new UpgradeOption(kind, level, "삽 던지기", "THROWING SHOVEL", "연사·관통·삽 개수 강화", "Faster, piercing, multi-shovel throws");
                 case UpgradeKind.OrbitingPickaxe: return new UpgradeOption(kind, level, "회전 곡괭이", "ORBITING PICKAXE", "개수·회전·크기 강화", "More, faster and larger pickaxes");
                 case UpgradeKind.Power: return new UpgradeOption(kind, level, "힘", "POWER", "모든 공격력 +12%", "All damage +12%");
                 case UpgradeKind.MoveSpeed: return new UpgradeOption(kind, level, "장화", "BOOTS", "이동 속도 +8%", "Move speed +8%");

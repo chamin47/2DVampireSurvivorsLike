@@ -15,6 +15,7 @@ namespace DawnFarm
         private float speed;
         private float lifetime;
         private int penetration;
+        private float spinSpeed;
         private bool active;
 
         public void Configure(IFarmGameSession gameSession, Vector3 position, Vector2 moveDirection, bool isHostile, float projectileDamage, float moveSpeed, int pierce, Sprite sprite)
@@ -26,6 +27,7 @@ namespace DawnFarm
             damage = projectileDamage;
             speed = moveSpeed;
             penetration = Mathf.Max(0, pierce);
+            spinSpeed = hostile ? 0f : 540f;
             lifetime = 5f;
             active = true;
             hitTargets.Clear();
@@ -40,6 +42,7 @@ namespace DawnFarm
         {
             if (!active || session == null || session.State != FarmGameState.Playing) return;
             transform.position += (Vector3)(direction * speed * Time.deltaTime);
+            if (spinSpeed != 0f) transform.Rotate(0f, 0f, spinSpeed * Time.deltaTime);
             lifetime -= Time.deltaTime;
             if (lifetime <= 0f) { Despawn(); return; }
 
@@ -74,6 +77,12 @@ namespace DawnFarm
             AssetLoader.Despawn(gameObject);
         }
 
-        private void OnDisable() => active = false;
+        private void OnDisable()
+        {
+            active = false;
+            spinSpeed = 0f;
+            transform.localRotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
+        }
     }
 }

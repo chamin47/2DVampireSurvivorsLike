@@ -353,7 +353,13 @@ namespace DawnFarm
             var visual = AssetLoader.Spawn(WeaponVisualAddress, runtimeRoot, AssetSource.Addressables);
             if (visual == null) return null;
             visual.transform.position = position;
-            visual.GetComponent<SpriteRenderer>().sprite = sprite;
+            visual.transform.rotation = Quaternion.identity;
+            visual.transform.localScale = Vector3.one;
+            var renderer = visual.GetComponent<SpriteRenderer>();
+            renderer.sprite = sprite;
+            renderer.color = Color.white;
+            renderer.flipX = false;
+            renderer.flipY = false;
             return visual;
         }
 

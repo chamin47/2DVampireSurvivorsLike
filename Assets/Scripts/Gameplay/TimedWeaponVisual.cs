@@ -6,13 +6,20 @@ namespace DawnFarm
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class TimedWeaponVisual : MonoBehaviour
     {
+        private SpriteRenderer spriteRenderer;
         private float remaining;
         private float spin;
         private bool active;
 
+        private void Awake() => spriteRenderer = GetComponent<SpriteRenderer>();
+
         public void Configure(Sprite sprite, float duration, float scale, float spinSpeed = 0f)
         {
-            GetComponent<SpriteRenderer>().sprite = sprite;
+            if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = sprite;
+            spriteRenderer.color = Color.white;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
             remaining = duration;
             spin = spinSpeed;
             transform.localScale = Vector3.one * scale;
@@ -31,6 +38,13 @@ namespace DawnFarm
             }
         }
 
-        private void OnDisable() => active = false;
+        private void OnDisable()
+        {
+            active = false;
+            remaining = 0f;
+            spin = 0f;
+            transform.localRotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace DawnFarm
     [RequireComponent(typeof(SpriteRenderer), typeof(SpriteFlipbook))]
     public sealed class FarmEnemy : MonoBehaviour
     {
+        private static float lastHitSoundTime = -10f;
         private IFarmGameSession session;
         private EnemyDefinition definition;
         private SpriteFlipbook animator;
@@ -77,7 +78,16 @@ namespace DawnFarm
             health -= damage;
             GameServices.Get<FarmEffectService>()?.Burst(transform.position, new Color(1f, 0.82f, 0.28f), 5);
             GameServices.Get<FarmEffectService>()?.Flash(spriteRenderer, Color.white, 0.08f);
-            if (Random.value < 0.35f && session.Config.hit != null) AudioPlayer.PlaySfx(session.Config.hit, 0.35f, Random.Range(0.94f, 1.08f));
+            if (Time.realtimeSinceStartup - lastHitSoundTime >= 0.08f)
+            {
+                AudioClip hitClip = Random.value < 0.5f ? session.Config.hit : session.Config.hitAlternate;
+                if (hitClip == null) hitClip = session.Config.hit ?? session.Config.hitAlternate;
+                if (hitClip != null)
+                {
+                    lastHitSoundTime = Time.realtimeSinceStartup;
+                    AudioPlayer.PlaySfx(hitClip, 0.24f, Random.Range(0.96f, 1.06f));
+                }
+            }
             if (health <= 0f) StartCoroutine(DieRoutine());
         }
 
