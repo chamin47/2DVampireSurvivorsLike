@@ -5,8 +5,8 @@
 `새벽 농장 생존기`는 밤마다 되살아나는 언데드에게 포위된 농장에서 8분간 버티고,
 마지막에 등장하는 사신 보스를 처치하는 2D 뱀서라이크 형식의 자동 공격 생존 게임입니다.
 
-- 실행 씬: `Assets/Game/Scenes/FarmSurvivors.unity`
-- 게임 설정 에셋: `Assets/Game/Data/FarmGameConfig.asset`
+- 실행 씬: `Assets/Scenes/FarmSurvivors.unity`
+- 게임 설정 에셋: `Assets/Data/FarmGameConfig.asset`
 - Excel 밸런스 원본: `Assets/Datas/FarmBalance.xlsx`
 - 자동 생성 데이터: `Assets/Resources/Tables/FarmBalance.json`
 
@@ -60,15 +60,13 @@
 
 ### 자동 공격 무기
 
-1. 농부의 낫
-   - 가장 가까운 적 방향으로 범위 공격을 합니다.
-   - 레벨에 따라 피해량과 범위가 증가하고 양방향 공격이 해금됩니다.
-2. 씨앗총
-   - 가장 가까운 적에게 투사체를 자동 발사합니다.
-   - 레벨에 따라 탄환 수, 관통 수, 피해량, 발사 속도가 증가합니다.
-3. 회전 곡괭이
+1. 회전 곡괭이
    - 플레이어 주변을 회전하며 닿은 적에게 지속 피해를 줍니다.
+   - 모든 캐릭터가 1레벨 기본 무기로 시작합니다.
    - 레벨에 따라 개수, 회전속도, 범위와 피해량이 증가합니다.
+2. 삽 던지기
+   - 가장 가까운 적에게 회전하는 삽을 자동으로 던집니다.
+   - 레벨에 따라 삽 개수, 관통 수, 피해량, 투척 속도가 증가합니다.
 
 ### 패시브 능력
 
@@ -165,18 +163,18 @@ Excel이 생성하는 `~$` 임시 잠금 파일은 무시합니다.
 
 ## 11. 주요 코드 위치
 
-- 게임 초기화와 진행: `Assets/Game/Scripts/Core/FarmGameBootstrap.cs`
-- 게임 이벤트와 공용 타입: `Assets/Game/Scripts/Core/GameTypes.cs`
-- 기본 설정: `Assets/Game/Scripts/Data/FarmGameConfig.cs`
-- Excel 런타임 적용: `Assets/Game/Scripts/Data/FarmBalanceRuntime.cs`
-- 플레이어: `Assets/Game/Scripts/Gameplay/FarmPlayer.cs`
-- 적 AI: `Assets/Game/Scripts/Gameplay/FarmEnemy.cs`
-- 무기와 강화: `Assets/Game/Scripts/Gameplay/FarmWeaponSystem.cs`
-- 투사체: `Assets/Game/Scripts/Gameplay/FarmProjectile.cs`
-- 드롭 아이템: `Assets/Game/Scripts/Gameplay/FarmPickup.cs`
-- UI: `Assets/Game/Scripts/UI/FarmGameUI.cs`
-- 다국어: `Assets/Game/Scripts/Presentation/FarmLocalization.cs`
-- 무한 타일 바닥: `Assets/Game/Scripts/Presentation/FarmWorldTiler.cs`
+- 게임 초기화와 진행: `Assets/Scripts/Core/FarmGameBootstrap.cs`
+- 게임 이벤트와 공용 타입: `Assets/Scripts/Core/GameTypes.cs`
+- 기본 설정: `Assets/Scripts/Data/FarmGameConfig.cs`
+- Excel 런타임 적용: `Assets/Scripts/Data/FarmBalanceRuntime.cs`
+- 플레이어: `Assets/Scripts/Gameplay/FarmPlayer.cs`
+- 적 AI: `Assets/Scripts/Gameplay/FarmEnemy.cs`
+- 무기와 강화: `Assets/Scripts/Gameplay/FarmWeaponSystem.cs`
+- 투사체: `Assets/Scripts/Gameplay/FarmProjectile.cs`
+- 드롭 아이템: `Assets/Scripts/Gameplay/FarmPickup.cs`
+- UI: `Assets/Scripts/UI/FarmGameUI.cs`
+- 다국어: `Assets/Scripts/Presentation/FarmLocalization.cs`
+- 무한 타일 바닥: `Assets/Scripts/Presentation/FarmWorldTiler.cs`
 - Excel 변경 감지: `Assets/Scripts/Framework/Table/Editor/TableAutoImporter.cs`
 - 표 검증: `Assets/Scripts/Framework/Table/Editor/TableSchemaValidator.cs`
 - JSON 내보내기: `Assets/Scripts/Framework/Table/Editor/TableJsonExporter.cs`
